@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(ProfilerLib)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror")
+
+# Set compiler warning flags in a platform/compiler-friendly way.
+# MSVC uses different warning flags than GCC/Clang, so configure them conditionally.
+if(MSVC)
+    # /W4 = high warning level, /WX = treat warnings as errors (maps roughly to -Werror)
+    add_compile_options(/W4 /WX)
+else()
+    # For GCC/Clang
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
